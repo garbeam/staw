@@ -4,38 +4,38 @@ package main
 import (
 	"bufio"
 	"flag"
+	"github.com/gomarkdown/markdown"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 	"text/template"
-	"github.com/gomarkdown/markdown"
 )
 
 type Args struct {
 	siteDir string
 	srcPath string
 	dstPath string
-	tpl string
-	page Page
+	tpl     string
+	page    Page
 }
 
 type Menu struct {
 	Prefix string
-	Path string
-	Name string
-	Sel bool
-	Items []Menu
+	Path   string
+	Name   string
+	Sel    bool
+	Items  []Menu
 }
 
 type Page struct {
-	Site string
-	SiteTitle string
-	Prefix string
-	Title string
+	Site        string
+	SiteTitle   string
+	Prefix      string
+	Title       string
 	HtmlContent string
-	Items []Menu
+	Items       []Menu
 }
 
 func buildMenu(cwd, path, prefix string, walk []string) []Menu {
@@ -45,23 +45,31 @@ func buildMenu(cwd, path, prefix string, walk []string) []Menu {
 	for _, f := range files {
 		sel := len(walk) > 0 && f.Name() == walk[0]
 		if f.IsDir() {
-			m := Menu{prefix, path + f.Name() + "/index.html", f.Name() + "/", sel, nil}
-			if sel {
-				m.Items = buildMenu(cwd + "/" + f.Name(), path + f.Name() + "/", prefix, walk[1:])
-			}
-			menu = append(menu, m)
+			menu = buildMenuNode(menu, cwd, path, prefix, walk, sel, f)
 		} else if isMdFile(f) {
-			title := getTitle(cwd + "/" + f.Name())
-			tmp := strings.TrimSuffix(f.Name(), ".md")
-			if tmp == "index" {
-				// prepend
-				menu = append([]Menu{Menu{prefix, path + "index.html", title, sel, nil}}, menu...)
-			} else {
-				menu = append(menu, Menu{prefix, path + tmp + "/index.html", title, sel, nil})
-			} 
+			menu = buildMenuLeaf(menu, cwd, path, prefix, sel, f)
 		}
 	}
 	return menu
+}
+
+func buildMenuLeaf(menu []Menu, cwd, path, prefix string, sel bool, f os.FileInfo) []Menu {
+	title := getTitle(cwd + "/" + f.Name())
+	tmp := strings.TrimSuffix(f.Name(), ".md")
+	if tmp == "index" {
+		// prepend
+		return append([]Menu{Menu{prefix, path + "index.html", title, sel, nil}}, menu...)
+	} else {
+		return append(menu, Menu{prefix, path + tmp + "/index.html", title, sel, nil})
+	}
+}
+
+func buildMenuNode(menu []Menu, cwd, path, prefix string, walk []string, sel bool, f os.FileInfo) []Menu {
+	m := Menu{prefix, path + f.Name() + "/index.html", f.Name() + "/", sel, nil}
+	if sel {
+		m.Items = buildMenu(cwd+"/"+f.Name(), path+f.Name()+"/", prefix, walk[1:])
+	}
+	return append(menu, m)
 }
 
 func copyFile(src, dst string) {
@@ -133,9 +141,9 @@ func processMdFile(a Args, walk []string, f os.FileInfo) {
 	t, err := template.ParseFiles(a.tpl)
 	dieOnError(err)
 	dst := getDstPath(a.dstPath, f)
-        out, err := os.Create(dst)
+	out, err := os.Create(dst)
 	dieOnError(err)
-        defer out.Close()
+	defer out.Close()
 	dieOnError(t.Execute(out, a.page))
 }
 
@@ -147,19 +155,19 @@ func processPath(a Args, walk []string) {
 	for _, f := range files {
 		b := a
 		b.srcPath = a.srcPath + "/" + f.Name()
-	     	if f.IsDir() {
+		if f.IsDir() {
 			b.dstPath = a.dstPath + "/" + f.Name()
 			processPath(b, append(walk, f.Name()))
-	     	} else {
+		} else {
 			if f.Name() == "index.md" {
 				emptyDir = false
 			}
 			if isMdFile(f) {
 				processMdFile(b, walk, f)
 			} else {
-				copyFile(b.srcPath, b.dstPath + "/" + f.Name())
+				copyFile(b.srcPath, b.dstPath+"/"+f.Name())
 			}
-	     	}
+		}
 	}
 	if emptyDir {
 		processMdFile(a, walk, nil)
@@ -171,7 +179,7 @@ func processSite(a Args, css string) {
 	if css != "" {
 		f, err := os.Stat(css)
 		dieOnError(err)
-		copyFile(css, a.dstPath + "/" + f.Name())
+		copyFile(css, a.dstPath+"/"+f.Name())
 	}
 }
 

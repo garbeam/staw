@@ -44,8 +44,7 @@ Example:
 	   +- some-topic
 	      +- intro.md
 
-	; staw -p file:///home/anselm/www/ -tpl default.tpl -css style.css \
-		-t 'example' -in /home/anselm/sites/example.com -out /home/anselm/www/example.com
+	; ./[example.sh](https://github.com/garbeam/staw/blob/master/example.sh)
 
 This run will generate:
 
@@ -59,7 +58,9 @@ This run will generate:
 
 Template
 --------
-Have a look at the default.tpl provided by staw.
+Have a look at the
+[default.tpl](https://github.com/garbeam/staw/blob/master/default.tpl) provided
+by staw.
 
 staw uses a recursive menu structure and defines the following variables that
 can be used during the template execution on each markdown page:

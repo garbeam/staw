@@ -37,14 +37,14 @@ site directory
 staw uses a site directory structure similar to the one introduced by werc.
 Each site lives in its directory tree.
 
-Example:
+Check out [example.sh](https://github.com/garbeam/staw/blob/master/example.sh).
 
 	example.com
 	   +- index.md
 	   +- some-topic
 	      +- intro.md
 
-	; ./[example.sh](https://github.com/garbeam/staw/blob/master/example.sh)
+	; ./example.sh
 
 This run will generate:
 

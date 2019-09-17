@@ -96,7 +96,21 @@ func dieOnError(err error) {
 	}
 }
 
-func getDstPath(dstPath string, f os.FileInfo) string {
+func getTitle(src string) string {
+	in, err := os.Open(src)
+	dieOnError(err)
+	defer in.Close()
+	reader := bufio.NewReader(in)
+	title, err := reader.ReadString('\n')
+	dieOnError(err)
+	return strings.TrimRight(title, "\n")
+}
+
+func isMdFile(f os.FileInfo) bool {
+	return strings.HasSuffix(f.Name(), ".md")
+}
+
+func mkDstPath(dstPath string, f os.FileInfo) string {
 	var dst, tmp string
 	if f == nil {
 		tmp = "index" // empty md directory case
@@ -113,20 +127,6 @@ func getDstPath(dstPath string, f os.FileInfo) string {
 	return dst
 }
 
-func getTitle(src string) string {
-	in, err := os.Open(src)
-	dieOnError(err)
-	defer in.Close()
-	reader := bufio.NewReader(in)
-	title, err := reader.ReadString('\n')
-	dieOnError(err)
-	return strings.TrimRight(title, "\n")
-}
-
-func isMdFile(f os.FileInfo) bool {
-	return strings.HasSuffix(f.Name(), ".md")
-}
-
 func processMdFile(a Args, walk []string, f os.FileInfo) {
 	if f != nil {
 		walk = append(walk, f.Name())
@@ -140,7 +140,7 @@ func processMdFile(a Args, walk []string, f os.FileInfo) {
 	a.page.Items = buildMenu(a.siteDir, "", a.page.Prefix, walk)
 	t, err := template.ParseFiles(a.tpl)
 	dieOnError(err)
-	dst := getDstPath(a.dstPath, f)
+	dst := mkDstPath(a.dstPath, f)
 	out, err := os.Create(dst)
 	dieOnError(err)
 	defer out.Close()

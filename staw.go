@@ -174,15 +174,6 @@ func processPath(a Args, walk []string) {
 	}
 }
 
-func processSite(a Args, css string) {
-	processPath(a, []string{})
-	if css != "" {
-		f, err := os.Stat(css)
-		dieOnError(err)
-		copyFile(css, a.dstPath+"/"+f.Name())
-	}
-}
-
 func main() {
 	tpl := flag.String("tpl", "default.tpl", "template file to be used (required)")
 	src := flag.String("in", "", "input site directory (required)")
@@ -197,5 +188,10 @@ func main() {
 	dieIfEmpty(dst, "no output directory given")
 	site, err := os.Stat(*src)
 	dieOnError(err)
-	processSite(Args{*src, *src, *dst, *tpl, Page{site.Name(), *title, *prefix, "", "", nil}}, *css)
+	processPath(Args{*src, *src, *dst, *tpl, Page{site.Name(), *title, *prefix, "", "", nil}}, []string{})
+	if css != "" {
+		f, err := os.Stat(css)
+		dieOnError(err)
+		copyFile(css, *dst+"/"+f.Name())
+	}
 }

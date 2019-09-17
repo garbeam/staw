@@ -65,17 +65,17 @@ by staw.
 staw uses a recursive menu structure and defines the following variables that
 can be used during the template execution on each markdown page:
 
-	.Site string
-	.SiteTitle string
-	.Prefix string
-	.Title string
+	.Site        string
+	.SiteTitle   string
+	.Prefix      string
+	.Title       string
 	.HtmlContent string
-	range .Items {
+	.Items range {
 		.Prefix string
-		.Path string
-		.Name string
-		.Sel bool
-		range .Items ...
+		.Path   string
+		.Name   string
+		.Sel    bool
+		.Items  range...
 	}
 
 Happy hacking.

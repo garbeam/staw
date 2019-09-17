@@ -189,9 +189,9 @@ func main() {
 	site, err := os.Stat(*src)
 	dieOnError(err)
 	processPath(Args{*src, *src, *dst, *tpl, Page{site.Name(), *title, *prefix, "", "", nil}}, []string{})
-	if css != "" {
-		f, err := os.Stat(css)
+	if *css != "" {
+		f, err := os.Stat(*css)
 		dieOnError(err)
-		copyFile(css, *dst+"/"+f.Name())
+		copyFile(*css, *dst+"/"+f.Name())
 	}
 }

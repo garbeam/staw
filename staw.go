@@ -151,7 +151,7 @@ func processPath(a Args, walk []string) {
 	os.Mkdir(a.dstPath, os.ModePerm)
 	files, err := ioutil.ReadDir(a.srcPath)
 	dieOnError(err)
-	emptyDir := true
+	noIndexMd := true
 	for _, f := range files {
 		b := a
 		b.srcPath = a.srcPath + "/" + f.Name()
@@ -160,7 +160,7 @@ func processPath(a Args, walk []string) {
 			processPath(b, append(walk, f.Name()))
 		} else {
 			if f.Name() == "index.md" {
-				emptyDir = false
+				noIndexMd = false
 			}
 			if isMdFile(f) {
 				processMdFile(b, walk, f)
@@ -169,7 +169,7 @@ func processPath(a Args, walk []string) {
 			}
 		}
 	}
-	if emptyDir {
+	if noIndexMd {
 		processMdFile(a, walk, nil)
 	}
 }

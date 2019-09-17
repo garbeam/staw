@@ -11,15 +11,20 @@
 	</div>
 	<div id="menu">
 		<span class="right">
-{{if eq .Site "example.com"}}
-		<a class="thisSite" href="http://example.com/index.html">example.com</a>
+{{if eq .Site "garbe.ca"}}
+		<a class="thisSite" href="http://garbe.ca/index.html">garbe.ca</a>
 {{else}}
-		<a href="http://example.com/index.html">example.com</a>
+		<a href="http://garbe.ca/index.html">garbe.ca</a>
 {{end}}
-{{if eq .Site "other.example.com"}}
-		<a class="thisSite" href="http://other.example.com/index.html">other.example.com</a>
+{{if eq .Site "beec.ca"}}
+		<a class="thisSite" href="http://beec.ca/index.html">beec.ca</a>
 {{else}}
-		<a href="http://other.example.com/index.html">other.example.com</a>
+		<a href="http://beec.ca/index.html">beec.ca</a>
+{{end}}
+{{if eq .Site "sta.li"}}
+		<a class="thisSite" href="http://sta.li/index.html">sta.li</a>
+{{else}}
+		<a href="http://sta.li/index.html">sta.li</a>
 {{end}}
 		</span>
 	</div>
@@ -44,7 +49,7 @@
 		<a href="https://github.com/garbeam/staw">staw</a> powered
 	</span>
 	<span class="right">
-	&copy; 2019 some name
+	&copy; MMXIX Anselm R. Garbe | <a href="http://garbe.ca/Contact/">Contact</a>
 	</span>
 	</div>
 </body>

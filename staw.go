@@ -4,13 +4,14 @@ package main
 import (
 	"bufio"
 	"flag"
-	"github.com/gomarkdown/markdown"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
-	"text/template"
+
+	"github.com/gomarkdown/markdown"
 )
 
 type Args struct {

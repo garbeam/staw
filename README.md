@@ -12,8 +12,7 @@ served as docroot for the particular site by a regular web server.
 
 staw uses Go's template approach and the
 [github.com/gomarkdown/markdown](https://github.com/gomarkdown/markdown)
-markdown package.  staw is self-contained and does not require any other
-dependencies.
+markdown package.
 
 Usage
 -----

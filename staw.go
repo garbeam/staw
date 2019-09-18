@@ -4,12 +4,12 @@ package main
 import (
 	"bufio"
 	"flag"
-	"html/template"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
+	"text/template"
 
 	"github.com/gomarkdown/markdown"
 )

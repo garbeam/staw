@@ -113,7 +113,7 @@ func isMdFile(f os.FileInfo) bool {
 func mkDstPath(dstPath string, f os.FileInfo) string {
 	var dst, tmp string
 	if f == nil {
-		tmp = "index" // empty md directory case
+		tmp = "index" // no index.md in directory case
 	} else {
 		tmp = strings.TrimSuffix(f.Name(), ".md")
 	}

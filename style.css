@@ -16,6 +16,26 @@ a:hover {
 	background-color: #eee;
 }
 
+h1, h2, h3, h4 {
+	margin: 1em 1ex 0.5ex 0;
+}
+
+h1 {
+	font-size: 1.4em;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+h3 {
+	font-size: 1.1em;
+}
+
+h4 {
+	font-size: 1.0em;
+}
+
 #menu {
 	clear: both;
 	margin: 1em 0 0 0;
@@ -60,7 +80,7 @@ a:hover {
 
 #nav {
 	float: right;
-	margin: 0 0 1em 1em;
+	margin: 0 0 2em 1em;
 	padding: 0;
 	width: 200px;
 }
@@ -78,7 +98,7 @@ a:hover {
 
 #nav li a {
 	display: block;
-	font-size: 0.95em;
+	font-size: 0.9em;
 	margin: 0;
 	padding: 0.6em;
 	border-left: 1px solid #999;

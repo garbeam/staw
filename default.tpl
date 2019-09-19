@@ -42,11 +42,6 @@
 	</div>
 
 	</div>
-	<div id="footer">
-	<span class="right">
-	&copy; MMXIX Anselm R. Garbe
-	</span>
-	</div>
 </body>
 </html>
 

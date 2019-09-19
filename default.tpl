@@ -6,28 +6,24 @@
 	<meta charset="utf-8"> 
 </head> 
 <body>
-	<div id="header">
-		<a href="/">{{.SiteTitle}}</a>
-	</div>
 	<div id="menu">
-		<span class="right">
 {{if eq .Site "garbe.ca"}}
-		<a class="thisSite" href="http://garbe.ca/index.html">garbe.ca</a>
+		<a class="thisSite" href="//garbe.ca/">home</a>
 {{else}}
-		<a href="http://garbe.ca/index.html">garbe.ca</a>
+		<a href="//garbe.ca/">home</a>
 {{end}}
 {{if eq .Site "beec.ca"}}
-		<a class="thisSite" href="http://beec.ca/index.html">beec.ca</a>
+		<a class="thisSite" href="//beec.ca/">bees</a>
 {{else}}
-		<a href="http://beec.ca/index.html">beec.ca</a>
+		<a href="//beec.ca/">bees</a>
 {{end}}
 {{if eq .Site "sta.li"}}
-		<a class="thisSite" href="http://sta.li/index.html">sta.li</a>
+		<a class="thisSite" href="//sta.li/">stali</a>
 {{else}}
-		<a href="http://sta.li/index.html">sta.li</a>
+		<a href="//sta.li/">stali</a>
 {{end}}
-		</span>
 	</div>
+	<div id="header">{{.SiteTitle}}</div>
 
 	<div id="content">
 	{{if .Items}}
@@ -45,11 +41,8 @@
 
 	</div>
 	<div id="footer">
-	<span class="left">
-		<a href="https://github.com/garbeam/staw">staw</a> powered
-	</span>
 	<span class="right">
-	&copy; MMXIX Anselm R. Garbe | <a href="http://garbe.ca/Contact/">Contact</a>
+	&copy; MMXIX Anselm R. Garbe
 	</span>
 	</div>
 </body>
@@ -58,7 +51,11 @@
 {{/* recursive (sub-)menu */}}
 {{define "submenu"}}
 	{{if .Sel}}
-	<li><a href="{{.Prefix}}/{{.Path}}" class="thisPage">{{.Name}}</a>
+		{{if .Items}}
+		<li><a href="{{.Prefix}}/{{.Path}}" class="thisPath">{{.Name}}</a>
+		{{else}}
+		<li><a href="{{.Prefix}}/{{.Path}}" class="thisPage">{{.Name}}</a>
+		{{end}}
 	{{else}}
 	<li><a href="{{.Prefix}}/{{.Path}}" class="normal">{{.Name}}</a>
 	{{end}}

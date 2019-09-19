@@ -1,13 +1,14 @@
 body {
-	background-color: #eee;
-	color: #222;
+	background-color: #fff;
+	color: #333;
 	font-family: sans-serif;
 	padding: 0;
-	margin: 0;
+	margin: 0 auto 0 auto;
+	max-width: 800px;
 }
 
 a {
-	color: #005386;
+	color: #069;
 	text-decoration: none;
 }
 
@@ -17,70 +18,50 @@ a:hover {
 
 #menu {
 	clear: both;
-	overflow: hidden;
-	color: #069;
-	background-color: #17a;
-	padding: 0.7ex;
-	font-size: 94%;
-	border-top: 1px solid #ccc;
-	border-bottom: 1px solid #069;
+	margin: 1em 0 0 0;
+	padding: 0.5em 0 0.5em 0;
+	font-size: 0.9em;
+	max-width: 800px;
+	border-bottom: 1px solid #999;
 }
 
 #menu a {
-	padding: 0.5ex 1ex 0.5ex 1ex;
-	color: #fff;
-}
-
-#menu a:hover {
-	background-color: #069;
+	padding: 0.5em 0.7em 0.5em 0.7em;
 }
 
 #menu a.thisSite {
+	color: #333;
 	font-weight: bold;
+	background-color: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #fff;
 }
 
 #header {
 	clear: both;
-	color: #555;
-	font-size: 1.78em;
-	padding: 0.7ex 0.7ex 0.7ex 0.7em;
+	color: #666;
+	float: left;
+	border-left: 1px solid #999;
+	font-size: 1.2em;
+	font-weight: bold;
+	padding: 0.7em;
 }
 
-h1 {
-	margin: 1em 1ex 0.5ex 0;
-	font-size: 1.4em;
-}
-
-h2 {
-	margin: 1em 1ex 0.5ex 0;
-	font-size: 1.3em;
-}
-
-h3 {
-	margin: 1em 1ex 0.5ex 0;
-	font-size: 1.0em;
-}
-
-h4 {
-	margin: 1em 1ex 0.5ex 0;
-	font-size: 0.9em;
-}
 
 #content {
 	clear: both;
 	margin: 0;
 	padding: 0;
-	background-color: #fff;
 	overflow: hidden;
-	min-height: 900px;
+	min-height: 300px;
 }
 
 #nav {
-	background-color: #fff;
-	float: left;
-	margin: 0 1px 0 0;
-	padding: 1em 0;
-	border-right: 1px dotted #ccc;
+	float: right;
+	margin: 0 0 1em 1em;
+	padding: 0;
 	width: 200px;
 }
 
@@ -95,33 +76,42 @@ h4 {
 	margin: 0;
 }
 
-#nav li ul {
-	padding-left: 0.6em !important;
-}
-
 #nav li a {
 	display: block;
+	font-size: 0.95em;
 	margin: 0;
-	padding: 0.8ex 2em 0.8ex 1em;
+	padding: 0.6em;
+	border-left: 1px solid #999;
 }
 
-#nav li a.thisPage {
-	color: #222;
+#nav li a.thisPath {
+	color: #333;
 	font-weight: bold;
 }
 
+#nav li a.thisPage {
+	background-color: #fff;
+	color: #333;
+	font-weight: bold;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #999;
+	border-right: 1px solid #999;
+	border-left: 1px solid #fff;
+}
+
 #main {
-	margin: 0 0 0 200px;
-	padding: 1.5em;
-	max-width: 50em;
+	margin: 0em;
+	padding: 0.5em 1em;
+	max-width: 800px;
+	border-top: 1px solid #999;
 }
 
 #footer {
 	clear: both;
 	color: #666;
-	border-top: 1px solid #ccc;
-	font-size: 84%;
-	padding: 1em;
+	border-top: 1px solid #999;
+	font-size: 0.9em;
+	padding: 0.5em 0.7em 0.5em 0.7em;
 	margin: 0 0 1.5em 0;
 }
 

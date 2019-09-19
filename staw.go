@@ -22,12 +22,12 @@ type Args struct {
 	page    Page
 }
 
-type Menu struct {
+type Nav struct {
 	Prefix string
 	Path   string
 	Name   string
 	Sel    bool
-	Items  []Menu
+	Items  []Nav
 }
 
 type Page struct {
@@ -36,41 +36,7 @@ type Page struct {
 	Prefix      string
 	Title       string
 	HtmlContent string
-	Items       []Menu
-}
-
-func buildMenu(cwd, path, prefix string, walk []string) []Menu {
-	files, err := ioutil.ReadDir(cwd)
-	dieOnError(err)
-	var menu []Menu
-	for _, f := range files {
-		sel := len(walk) > 0 && f.Name() == walk[0]
-		if f.IsDir() {
-			menu = buildMenuNode(menu, cwd, path, prefix, walk, sel, f)
-		} else if isMdFile(f) {
-			menu = buildMenuLeaf(menu, cwd, path, prefix, sel, f)
-		}
-	}
-	return menu
-}
-
-func buildMenuLeaf(menu []Menu, cwd, path, prefix string, sel bool, f os.FileInfo) []Menu {
-	title := getTitle(cwd + "/" + f.Name())
-	tmp := strings.TrimSuffix(f.Name(), ".md")
-	if tmp == "index" {
-		// prepend
-		return append([]Menu{Menu{prefix, path + "index.html", title, sel, nil}}, menu...)
-	} else {
-		return append(menu, Menu{prefix, path + tmp + "/index.html", title, sel, nil})
-	}
-}
-
-func buildMenuNode(menu []Menu, cwd, path, prefix string, walk []string, sel bool, f os.FileInfo) []Menu {
-	m := Menu{prefix, path + f.Name() + "/index.html", f.Name() + "/", sel, nil}
-	if sel {
-		m.Items = buildMenu(cwd+"/"+f.Name(), path+f.Name()+"/", prefix, walk[1:])
-	}
-	return append(menu, m)
+	Items       []Nav
 }
 
 func copyFile(src, dst string) {
@@ -128,6 +94,40 @@ func mkDstPath(dstPath string, f os.FileInfo) string {
 	return dst
 }
 
+func mkNav(cwd, path, prefix, nbsp string, walk []string) []Nav {
+	files, err := ioutil.ReadDir(cwd)
+	dieOnError(err)
+	var nav []Nav
+	for _, f := range files {
+		sel := len(walk) > 0 && f.Name() == walk[0]
+		if f.IsDir() {
+			nav = mkNavNode(nav, cwd, path, prefix, nbsp, walk, sel, f)
+		} else if isMdFile(f) {
+			nav = mkNavLeaf(nav, cwd, path, prefix, nbsp, sel, f)
+		}
+	}
+	return nav
+}
+
+func mkNavLeaf(nav []Nav, cwd, path, prefix, nbsp string, sel bool, f os.FileInfo) []Nav {
+	title := getTitle(cwd + "/" + f.Name())
+	tmp := strings.TrimSuffix(f.Name(), ".md")
+	if tmp == "index" {
+		// prepend
+		return append([]Nav{Nav{prefix, path, nbsp + title, sel, nil}}, nav...)
+	} else {
+		return append(nav, Nav{prefix, path + tmp + "/", nbsp + title, sel, nil})
+	}
+}
+
+func mkNavNode(nav []Nav, cwd, path, prefix, nbsp string, walk []string, sel bool, f os.FileInfo) []Nav {
+	n := Nav{prefix, path + f.Name() + "/", nbsp + f.Name() + "/", sel, nil}
+	if sel {
+		n.Items = mkNav(cwd+"/"+f.Name(), path+f.Name()+"/", prefix, nbsp + "&nbsp;&nbsp;", walk[1:])
+	}
+	return append(nav, n)
+}
+
 func processMdFile(a Args, walk []string, f os.FileInfo) {
 	if f != nil {
 		walk = append(walk, f.Name())
@@ -138,7 +138,7 @@ func processMdFile(a Args, walk []string, f os.FileInfo) {
 	} else if len(walk) > 0 {
 		a.page.Title = walk[len(walk)-1] + "/"
 	}
-	a.page.Items = buildMenu(a.siteDir, "", a.page.Prefix, walk)
+	a.page.Items = mkNav(a.siteDir, "", a.page.Prefix, "", walk)
 	t, err := template.ParseFiles(a.tpl)
 	dieOnError(err)
 	dst := mkDstPath(a.dstPath, f)

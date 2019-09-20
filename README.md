@@ -18,59 +18,29 @@ Usage
 -----
 	; staw -h
 	Usage of ./staw:
-	  -css string
-		style.css file to be copied to site output directory (optional)
 	  -in string
 		input site directory (required)
 	  -out string
 		output site directory (required)
-	  -p string
-		url-prefix for local testing (optional)
 	  -t string
 		site title of the site (required)
 	  -tpl string
-		template file to be used (required) (default "default.tpl")
-
-site directory
---------------
-staw uses a site directory structure similar to the one introduced by werc.
-Each site lives in its directory tree.
-
-Check out [example.sh](https://github.com/garbeam/staw/blob/master/example.sh).
-
-	example.com
-	   +- index.md
-	   +- some-topic
-	      +- intro.md
-
-	; ./example.sh
-
-This run will generate:
-
-	example.com
-	   +- style.css
-	   +- index.html
-	   +- some-topic
-	      +- index.html
-	      +- intro
-                 +- index.html
+		template file to be used (required) (default "page.tpl")
 
 Template
 --------
 Have a look at the
-[default.tpl](https://github.com/garbeam/staw/blob/master/default.tpl) provided
-by staw.
+
+	sample/page.tpl
 
 staw uses a recursive menu structure and defines the following variables that
 can be used during the template execution on each markdown page:
 
 	.Site        string
 	.SiteTitle   string
-	.Prefix      string
 	.Title       string
 	.HtmlContent string
 	.Items range {
-		.Prefix string
 		.Path   string
 		.Name   string
 		.Sel    bool

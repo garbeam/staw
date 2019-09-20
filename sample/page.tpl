@@ -2,27 +2,22 @@
 <html>
 <head> 
 	<title>{{.Title}} | {{.SiteTitle}}</title>
-	<link rel="stylesheet" type="text/css" href="{{.Prefix}}/style.css">
+	<link rel="stylesheet" type="text/css" href="/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8"> 
 </head> 
 <body>
 	<div id="menu">
-{{if eq .Site "garbe.ca"}}
-		<a class="thisSite" href="//garbe.ca/">home</a>
+{{if eq .Site "example.com"}}
+		<a class="thisSite" href="//example.com/">Home</a>
 {{else}}
-		<a href="//garbe.ca/">home</a>
+		<a href="//example.com/">Home</a>
 {{end}}
-{{if eq .Site "beec.ca"}}
-		<a class="thisSite" href="//beec.ca/">bees</a>
+{{if eq .Site "other.example.com"}}
+		<a class="thisSite" href="//other.example.com/">Other</a>
 {{else}}
-		<a href="//beec.ca/">bees</a>
-{{end}}
-{{if eq .Site "sta.li"}}
-		<a class="thisSite" href="//sta.li/">stali</a>
-{{else}}
-		<a href="//sta.li/">stali</a>
+		<a href="//other.example.com/">Other</a>
 {{end}}
 	</div>
 	<div id="header"><span class="siteTitle">{{.SiteTitle}}</span></div>
@@ -50,12 +45,12 @@
 {{define "submenu"}}
 	{{if .Sel}}
 		{{if .Items}}
-		<li><a href="{{.Prefix}}/{{.Path}}" class="thisPath">{{.Name}}</a>
+		<li><a href="/{{.Path}}" class="thisPath">{{.Name}}</a>
 		{{else}}
-		<li><a href="{{.Prefix}}/{{.Path}}" class="thisPage">{{.Name}}</a>
+		<li><a href="/{{.Path}}" class="thisPage">{{.Name}}</a>
 		{{end}}
 	{{else}}
-	<li><a href="{{.Prefix}}/{{.Path}}" class="normal">{{.Name}}</a>
+	<li><a href="/{{.Path}}" class="normal">{{.Name}}</a>
 	{{end}}
 		{{if .Items}}
 			<ul>

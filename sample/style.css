@@ -1,0 +1,140 @@
+body {
+	background-color: #fff;
+	color: #333;
+	font-family: 'Montserrat', sans-serif;
+	padding: 0;
+	margin: 0 auto 0 auto;
+	max-width: 800px;
+}
+
+a {
+	color: #039;
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: #ddd;
+}
+
+h1, h2, h3, h4 {
+	font-weight: 600;
+	margin: 1em 1ex 0.5ex 0;
+}
+
+h1 {
+	font-size: 1.4em;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+h3 {
+	font-size: 1.1em;
+}
+
+h4 {
+	font-size: 1.0em;
+}
+
+#menu {
+	clear: both;
+	margin: 1.5em 0 0 0;
+	padding: 0.5em 0 0.5em 0;
+	font-size: 0.9em;
+	max-width: 800px;
+	border-bottom: 1px solid #999;
+}
+
+#menu a {
+	padding: 0.5em 0.7em 0.5em 0.7em;
+}
+
+#menu a.thisSite {
+	color: #333;
+	font-weight: 600;
+	background-color: #eee;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #eee;
+}
+
+#header {
+	background-color: #eee;
+	clear: both;
+	overflow: hidden;
+	color: #666;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	font-size: 1.2em;
+	font-weight: 600;
+	margin: 0;
+	padding: 0;
+}
+
+.siteTitle {
+	float: left;
+	padding: 1em;
+}
+
+#content {
+	clear: both;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	min-height: 300px;
+}
+
+#nav {
+	background-color: #eee;
+	border-right: 1px solid #999;
+	font-size: 0.9em;
+	float: right;
+	margin: 0 0 2em 1em;
+	padding: 0;
+	width: 200px;
+}
+
+#nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+#nav li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#nav li a {
+	display: block;
+	margin: 0;
+	padding: 0.6em 0.6em 0.6em 1em;
+	border-left: 1px solid #999;
+}
+
+#nav li a.empty {
+	background-color: #eee;
+	border-bottom: 1px solid #999;
+}
+
+#nav li a.thisPath {
+	color: #333;
+	font-weight: 600;
+}
+
+#nav li a.thisPage {
+	background-color: #fff;
+	color: #333;
+	font-weight: 600;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #fff;
+}
+
+#main {
+	margin: 0 0 1.5em 0;
+	padding: 0.5em 1em;
+	border-top: 1px solid #999;
+}

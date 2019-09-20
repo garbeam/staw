@@ -22,55 +22,19 @@ type Args struct {
 	page    Page
 }
 
-type Menu struct {
-	Prefix string
+type Nav struct {
 	Path   string
 	Name   string
 	Sel    bool
-	Items  []Menu
+	Items  []Nav
 }
 
 type Page struct {
 	Site        string
 	SiteTitle   string
-	Prefix      string
 	Title       string
 	HtmlContent string
-	Items       []Menu
-}
-
-func buildMenu(cwd, path, prefix string, walk []string) []Menu {
-	files, err := ioutil.ReadDir(cwd)
-	dieOnError(err)
-	var menu []Menu
-	for _, f := range files {
-		sel := len(walk) > 0 && f.Name() == walk[0]
-		if f.IsDir() {
-			menu = buildMenuNode(menu, cwd, path, prefix, walk, sel, f)
-		} else if isMdFile(f) {
-			menu = buildMenuLeaf(menu, cwd, path, prefix, sel, f)
-		}
-	}
-	return menu
-}
-
-func buildMenuLeaf(menu []Menu, cwd, path, prefix string, sel bool, f os.FileInfo) []Menu {
-	title := getTitle(cwd + "/" + f.Name())
-	tmp := strings.TrimSuffix(f.Name(), ".md")
-	if tmp == "index" {
-		// prepend
-		return append([]Menu{Menu{prefix, path + "index.html", title, sel, nil}}, menu...)
-	} else {
-		return append(menu, Menu{prefix, path + tmp + "/index.html", title, sel, nil})
-	}
-}
-
-func buildMenuNode(menu []Menu, cwd, path, prefix string, walk []string, sel bool, f os.FileInfo) []Menu {
-	m := Menu{prefix, path + f.Name() + "/index.html", f.Name() + "/", sel, nil}
-	if sel {
-		m.Items = buildMenu(cwd+"/"+f.Name(), path+f.Name()+"/", prefix, walk[1:])
-	}
-	return append(menu, m)
+	Items       []Nav
 }
 
 func copyFile(src, dst string) {
@@ -128,6 +92,40 @@ func mkDstPath(dstPath string, f os.FileInfo) string {
 	return dst
 }
 
+func mkNav(cwd, path, nbsp string, walk []string) []Nav {
+	files, err := ioutil.ReadDir(cwd)
+	dieOnError(err)
+	var nav []Nav
+	for _, f := range files {
+		sel := len(walk) > 0 && f.Name() == walk[0]
+		if f.IsDir() {
+			nav = mkNavNode(nav, cwd, path, nbsp, walk, sel, f)
+		} else if isMdFile(f) {
+			nav = mkNavLeaf(nav, cwd, path, nbsp, sel, f)
+		}
+	}
+	return nav
+}
+
+func mkNavLeaf(nav []Nav, cwd, path, nbsp string, sel bool, f os.FileInfo) []Nav {
+	title := getTitle(cwd + "/" + f.Name())
+	tmp := strings.TrimSuffix(f.Name(), ".md")
+	if tmp == "index" {
+		// prepend
+		return append([]Nav{Nav{path, nbsp + title, sel, nil}}, nav...)
+	} else {
+		return append(nav, Nav{path + tmp + "/", nbsp + title, sel, nil})
+	}
+}
+
+func mkNavNode(nav []Nav, cwd, path, nbsp string, walk []string, sel bool, f os.FileInfo) []Nav {
+	n := Nav{path + f.Name() + "/", nbsp + f.Name() + "/", sel, nil}
+	if sel {
+		n.Items = mkNav(cwd+"/"+f.Name(), path+f.Name()+"/", nbsp + "&nbsp;&nbsp;", walk[1:])
+	}
+	return append(nav, n)
+}
+
 func processMdFile(a Args, walk []string, f os.FileInfo) {
 	if f != nil {
 		walk = append(walk, f.Name())
@@ -138,7 +136,7 @@ func processMdFile(a Args, walk []string, f os.FileInfo) {
 	} else if len(walk) > 0 {
 		a.page.Title = walk[len(walk)-1] + "/"
 	}
-	a.page.Items = buildMenu(a.siteDir, "", a.page.Prefix, walk)
+	a.page.Items = mkNav(a.siteDir, "", "", walk)
 	t, err := template.ParseFiles(a.tpl)
 	dieOnError(err)
 	dst := mkDstPath(a.dstPath, f)
@@ -176,12 +174,10 @@ func processPath(a Args, walk []string) {
 }
 
 func main() {
-	tpl := flag.String("tpl", "default.tpl", "template file to be used (required)")
+	tpl := flag.String("tpl", "page.tpl", "template file to be used (required)")
 	src := flag.String("in", "", "input site directory (required)")
 	dst := flag.String("out", "", "output site directory (required)")
 	title := flag.String("t", "", "site title of the site (required)")
-	prefix := flag.String("p", "", "url-prefix for local testing (optional)")
-	css := flag.String("css", "", "style.css file to be copied to site output directory (optional)")
 	flag.Parse()
 	dieIfEmpty(tpl, "no template given")
 	dieIfEmpty(title, "no site title given")
@@ -189,10 +185,5 @@ func main() {
 	dieIfEmpty(dst, "no output directory given")
 	site, err := os.Stat(*src)
 	dieOnError(err)
-	processPath(Args{*src, *src, *dst, *tpl, Page{site.Name(), *title, *prefix, "", "", nil}}, []string{})
-	if *css != "" {
-		f, err := os.Stat(*css)
-		dieOnError(err)
-		copyFile(*css, *dst+"/"+f.Name())
-	}
+	processPath(Args{*src, *src, *dst, *tpl, Page{site.Name(), *title, "", "", nil}}, []string{})
 }

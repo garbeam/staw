@@ -34,6 +34,7 @@
 			{{range .Items}}
 			{{template "submenu" .}}
 			{{end}}
+			<li><a href="" class="empty"></a></li>
 		</ul>
 	</div>
 	{{end}}

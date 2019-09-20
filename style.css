@@ -8,12 +8,12 @@ body {
 }
 
 a {
-	color: #069;
+	color: #039;
 	text-decoration: none;
 }
 
 a:hover {
-	background-color: #eee;
+	background-color: #ddd;
 }
 
 h1, h2, h3, h4 {
@@ -52,23 +52,26 @@ h4 {
 #menu a.thisSite {
 	color: #333;
 	font-weight: bold;
-	background-color: #fff;
+	background-color: #eee;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
 	border-top: 1px solid #999;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #eee;
 }
 
 #header {
+	background-color: #eee;
 	clear: both;
 	color: #666;
 	float: left;
 	border-left: 1px solid #999;
+	border-right: 1px solid #999;
 	font-size: 1.2em;
 	font-weight: bold;
-	padding: 0.7em;
+	padding: 15px;
+	width: 100%;
+	max-width: 768px;
 }
-
 
 #content {
 	clear: both;
@@ -79,6 +82,8 @@ h4 {
 }
 
 #nav {
+	background-color: #eee;
+	border-right: 1px solid #999;
 	float: right;
 	margin: 0 0 2em 1em;
 	padding: 0;
@@ -104,6 +109,11 @@ h4 {
 	border-left: 1px solid #999;
 }
 
+#nav li a.empty {
+	background-color: #eee;
+	border-bottom: 1px solid #999;
+}
+
 #nav li a.thisPath {
 	color: #333;
 	font-weight: bold;
@@ -115,7 +125,6 @@ h4 {
 	font-weight: bold;
 	border-top: 1px solid #999;
 	border-bottom: 1px solid #999;
-	border-right: 1px solid #999;
 	border-left: 1px solid #fff;
 }
 

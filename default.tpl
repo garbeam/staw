@@ -3,7 +3,7 @@
 <head> 
 	<title>{{.Title}} | {{.SiteTitle}}</title>
 	<link rel="stylesheet" type="text/css" href="{{.Prefix}}/style.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8"> 
 </head> 

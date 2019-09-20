@@ -25,7 +25,7 @@
 		<a href="//sta.li/">stali</a>
 {{end}}
 	</div>
-	<div id="header">{{.SiteTitle}}</div>
+	<div id="header"><span class="siteTitle">{{.SiteTitle}}</span></div>
 
 	<div id="content">
 	{{if .Items}}
